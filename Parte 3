@@ -1,0 +1,33 @@
+/* USER CODE BEGIN 2 */
+  if (HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1) != HAL_OK){
+      Error_Handler();
+  }
+
+  if (HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1) != HAL_OK){
+      Error_Handler();
+  }
+
+  if (HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1) != HAL_OK){
+      Error_Handler();
+  }
+  /* USER CODE END 2 */
+
+//TIMER3
+//htim3.Init.Prescaler = 47999;
+//htim3.Init.Period = 499;
+//sConfigOC.Pulse = 250;
+//Genera
+//Periodo: 500 ms
+//Frecuencia: 2 Hz
+//Encendido: 250 ms
+//Apagado: 250 ms
+
+//TIM4
+//htim4.Init.Prescaler = 47999;
+//htim4.Init.Period = 1999;
+//sConfigOC.Pulse = 1000;
+//Genera
+//Periodo: 2 segundos
+//Frecuencia: 0.5 Hz
+//Encendido: 1 segundo
+//Apagado: 1 segundo
