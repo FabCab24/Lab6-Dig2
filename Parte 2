@@ -1,0 +1,49 @@
+/* USER CODE BEGIN Includes */
+#include <stdio.h>
+/* USER CODE END Includes */
+
+/* USER CODE BEGIN PV */
+volatile uint8_t flagMedicion = 0;
+volatile uint8_t numFlanco = 0;
+volatile uint32_t flanco1 = 0;
+volatile uint32_t flanco2 = 0;
+volatile uint32_t delta = 0;
+volatile float frecuencia = 0;
+uint32_t frecuencia100;
+/* USER CODE END PV */
+
+/* USER CODE BEGIN 1 */
+	char mensaje[50];
+	int longitud;
+
+  /* USER CODE END 1 */
+
+/* USER CODE BEGIN WHILE */
+  while (1)
+  {
+      while (flagMedicion == 0)
+      {
+      }
+
+      delta = flanco2 - flanco1;
+
+      if (delta != 0)
+      {
+          frecuencia = ((float)ftimclk / (float)delta);
+
+          // comunicación UART
+          frecuencia100 = ((ftimclk * 100) + (delta / 2)) / delta;
+
+          longitud = snprintf(mensaje, sizeof(mensaje), "Frecuencia: %lu.%02lu Hz\r\n", (unsigned long)(frecuencia100 / 100), (unsigned long)(frecuencia100 % 100));
+          HAL_UART_Transmit(&huart2, (uint8_t *)mensaje, longitud, HAL_MAX_DELAY);
+      }
+
+      flagMedicion = 0;
+
+      if (HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1) != HAL_OK)
+      {
+          Error_Handler();
+      }
+
+      HAL_Delay(250);
+    /* USER CODE END WHILE */
