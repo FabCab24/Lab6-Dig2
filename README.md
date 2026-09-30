@@ -1,2 +1,2 @@
-# Lab6-Dig2
+# Lab6-Digital2
 TMR y UART con generador de funciones
